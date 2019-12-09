@@ -5,9 +5,12 @@ import "./reusable_card.dart";
 
 
 const bottomContainerHeight = 80.0;
-const darkGray = Color(0xff1d1e33);
+const activeCardColor = Color(0xff1d1e33);
+const inactiveCardColor = Color(0xff111328);
 const bottomColor = Color(0xffeb1555);
 
+
+enum Gender {male, female}
 
 class InputPage extends StatefulWidget {
   @override
@@ -16,40 +19,58 @@ class InputPage extends StatefulWidget {
 
 
 class _InputPageState extends State<InputPage> {
+  Gender selectedGender = null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Center(child: Text('BMI CALCULATOR'))),
       body: Column(
         children: <Widget>[
-          Expanded(child: Row(
-            children: <Widget>[
-              Expanded(
-                child: ReusableCard(
-                  color:darkGray,
-                  cardChild: new IconContent(
-                    icon:FontAwesomeIcons.mars, 
-                    title:"Male"
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        selectedGender = Gender.male;                       
+                      });
+                    },
+                    child: ReusableCard(
+                    color:selectedGender == Gender.male ? activeCardColor: inactiveCardColor,
+                    cardChild: IconContent(
+                      icon:FontAwesomeIcons.mars, 
+                      title:"Male"
+                    ),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: ReusableCard(
-                  color:darkGray,
-                  cardChild: new IconContent(
-                    icon:FontAwesomeIcons.venus, 
-                    title:"Female"
-                  ),                
+
+                Expanded(
+                  child: GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        selectedGender = Gender.female;                                                
+                      });
+                    },
+                    child: ReusableCard(
+                      color:selectedGender == Gender.female ? activeCardColor: inactiveCardColor,
+                      cardChild: IconContent(
+                        icon:FontAwesomeIcons.venus, 
+                        title:"FeMale"
+                      ),
+                    ),                                
+                  ),
                 ),
-              ),
-            ],
+              ],
           )),
-          Expanded(child: ReusableCard(color:darkGray)),
+          Expanded(child: ReusableCard(color:activeCardColor)),
 
           Expanded(child: Row(
             children: <Widget>[
-              Expanded(child: ReusableCard(color:darkGray)),
-              Expanded(child: ReusableCard(color:darkGray))
+              Expanded(child: ReusableCard(color:activeCardColor)),
+              Expanded(child: ReusableCard(color:activeCardColor))
             ],
           )),
 
