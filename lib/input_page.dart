@@ -15,7 +15,10 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender selectedGender = null;
-  int height = 0;
+  int height = 120;
+  int weight = 60;
+  int age = 20;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,19 +85,29 @@ class _InputPageState extends State<InputPage> {
                       )
                     ],
                   ),
-                  Slider(
-                    onChanged:(double newValue){                    
-                      setState(() {
-                        height = newValue.round();
-                        print(newValue);
-
-                      });                      
-                    },
-                    activeColor: Color(0xffeb1555),
-                    inactiveColor: Color(0xff8d8e98),
-                    value: height.toDouble(),
-                    min:0.0,
-                    max:220.0,
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      activeTrackColor: Colors.white,
+                      inactiveTrackColor: Color(0xff8d8e98),
+                      overlayColor: Color(0x29eb1555),
+                      thumbColor: Color(0xffeb1555),
+                      thumbShape: RoundSliderThumbShape(
+                        enabledThumbRadius: 15
+                      ),
+                      overlayShape: RoundSliderOverlayShape(
+                        overlayRadius: 30
+                      )
+                    ),
+                    child: Slider(
+                      onChanged:(double newValue){                    
+                        setState(() {
+                          height = newValue.round();                        
+                        });                      
+                      },                                            
+                      value: height.toDouble(),
+                      min:0.0,
+                      max:220.0,
+                    ),
                   )
                 ],
               ),
@@ -103,8 +116,82 @@ class _InputPageState extends State<InputPage> {
 
           Expanded(child: Row(
             children: <Widget>[
-              Expanded(child: ReusableCard(color:kActiveCardColor)),
-              Expanded(child: ReusableCard(color:kActiveCardColor))
+              Expanded(
+                child: ReusableCard(
+                  color:kActiveCardColor,
+                  cardChild: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Weight",
+                        style:kLabelTextStyle
+                      ),
+                      Text(
+                        weight.toString(),
+                        style: kNumTextStyle,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          RoundIconButton(
+                            icon: FontAwesomeIcons.plus,
+                            func: (){
+                              setState(() {
+                                weight += 1;
+                              });
+                            }
+                          ),
+                          RoundIconButton(
+                            icon: FontAwesomeIcons.minus,
+                            func: (){
+                              setState(() {
+                                weight -= 1;
+                              });
+                            }
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                )
+              ),
+              Expanded(child: ReusableCard(
+                  color:kActiveCardColor,
+                  cardChild: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Age",
+                        style:kLabelTextStyle
+                      ),
+                      Text(
+                        age.toString(),
+                        style: kNumTextStyle,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          RoundIconButton(
+                            icon: FontAwesomeIcons.plus,
+                            func: (){
+                              setState(() {
+                                age += 1;
+                              });
+                            }
+                          ),
+                          RoundIconButton(
+                            icon: FontAwesomeIcons.minus,
+                            func: (){
+                              setState(() {
+                                age -= 1;
+                              });
+                            }
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ))
             ],
           )),
 
@@ -116,6 +203,27 @@ class _InputPageState extends State<InputPage> {
           )
         ],
       )
+    );
+  }
+}
+
+
+class RoundIconButton extends StatelessWidget {
+  RoundIconButton({this.icon, this.func});
+  final Function func;
+  final IconData icon;
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icon),
+      onPressed: func,
+      shape: CircleBorder(),
+      elevation: 0,
+      fillColor: Color(0xff4c4f5e),
+      constraints: BoxConstraints.tightFor(
+        width: 56,
+        height: 56,
+      ),
     );
   }
 }
