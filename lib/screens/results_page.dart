@@ -6,6 +6,11 @@ import "../calculator.dart";
 
 
 class ResultsPage extends StatelessWidget {
+  ResultsPage({this.bmiRes, this.interpret, this.resText});
+  final String bmiRes;
+  final String resText;
+  final String interpret;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,15 +40,15 @@ class ResultsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "o",
+                    resText,
                     style: kResultTextStyle,
                   ),
                   Text(
-                    "89",
+                    bmiRes,
                     style: kBMITextStyle,
                   ),
                   Text(
-                    "description",
+                    interpret,
                     textAlign: TextAlign.center,
                     style:kBodyTextStyle
                   ),
